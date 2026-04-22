@@ -65,3 +65,63 @@ SELECT * from ryhm;
 UPDATE ryhm SET ryhmajuhataja=8 WHERE ryhmNimi='LOGITpv24'
 
 
+--
+  
+--4 tables
+Use LOGITpv24baas;
+
+--Category (idCategory, Category_Name)
+CREATE Table Category(
+idCategoty int PRIMARY KEY identity(1,1),
+Category_Name varchar(10));
+Insert into Category
+values ('mööbel')
+select * from Category;
+ALTER TABLE Category ADD CONSTRAIT Category_Name UNIQUE (Category_Name);
+Drop table category;
+
+--Product
+Create table Product(
+idProduct int primary key identity(1,1), 
+Name varchar(10), 
+idCategory int, foreign key (idCategory) references Category (idCategory),
+Price money)
+drop table Product
+
+--täidame tabeli
+Insert into Product
+values ('vood', 1, 3, 70) 
+select * from Product;
+
+--table sale
+create table Sale(
+idSale int primary key identity(1,1), 
+idProduct int,  
+idCustomer int,
+foreign key (idProduct) references Product (idProduct),
+Count int, 
+Date_of_sale date)
+drop table sale 
+
+--table customer
+create table Customer(
+idCustomer int primary key identity (1,1),
+Name varchar(15),
+Contact varchar(15))
+drop table Customer
+
+--lisame piirang foreign key
+ALTER TABLE sale ADD CONSTRAINT fk_sale
+FOREIGN KEY (idCustomer) References Customer (idCustomer);
+
+--täidame sale
+insert into Sale 
+values (2, 3, 7, '105-308')
+select * from Sale;
+
+--täidame customer
+insert into Customer
+values ('Liis', '477 988')
+select * from Customer
+
+
